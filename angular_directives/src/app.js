@@ -3,7 +3,7 @@
   angular.module('app',[])
   .directive('starsContainer',function(){
     var Controller=function(){
-         this.scores=[];
+    this.scores=[];
          this.addScore=function(score){
             this.scores.push(score);
           };

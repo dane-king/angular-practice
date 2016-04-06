@@ -1,5 +1,6 @@
 describe('Directives', function() {
   var compileFn, $rootScope;
+
   beforeEach(module('app.directive'));
 
   beforeEach(inject(function($compile, _$rootScope_){
@@ -11,28 +12,37 @@ describe('Directives', function() {
       return compiledElement;
     };
   }));
+
   describe("Template", function () {
-    it("should return template string for attribute", function () {
-        expect(compileFn('<div tmpl></div>').html()).toBe('template text ');
+    var compiledElement;
+    beforeEach(function () {
+      var scope=$rootScope.$new();
+      scope.text="expanded";
+      compiledElement=compileFn('<tmpl>This is overwritten</templ>',scope);
     });
-
-    it("should return template string for element", function () {
-        expect(compileFn('<tmpl></tmpl>').html()).toBe('template text ');
+    it("should expand template", function () {
+      expect(compiledElement.html()).toEqual('template text expanded');
     });
-
-    it("should be able to bind to root scope", function () {
-        $rootScope.text='root text';
-        expect(compileFn('<tmpl><tmpl>',$rootScope).html()).toBe('template text root text');
-    });
-
-    it("should be able to bind to parent scope", function () {
-        var mockScope=$rootScope.$new();
-        mockScope.text="mock text";
-        expect(compileFn('<tmpl><tmpl>',mockScope).html()).toBe('template text mock text');
-    });
-
   });
-
+  describe("Link Functions", function () {
+    var compiledElement;
+    beforeEach(function () {
+      var scope=$rootScope.$new();
+      scope.text="new scope";
+      scope.fn=function() {console.log(test);};
+      compiledElement=compileFn('<link-fn data-my-attr="attr"></link-fn>',scope);
+    });
+    it("should be able set scope", function () {
+      expect(compiledElement.html()).toContain('<div class="ng-binding">In Link</div>');
+    });
+    it("should be able change element DOM", function () {
+      expect(compiledElement.html()).toContain('<span>Added DOM</span>');
+    });
+    it("should be able access and change attributes", function () {
+      compiledElement.html();
+      expect(compiledElement.html()).toContain('<span>Added DOM</span>');
+    });
+  });
   describe("Isolated Scope", function () {
     var mockScope, compiledElement;
     var isoHtml='<iso-scope bind-both="config" bind-method="fn()" bind-one="{{config.prop1}}"><iso-scope>';
@@ -81,27 +91,15 @@ describe('Directives', function() {
         expect(mockScope.fn).toHaveBeenCalled();
     });
   });
-  describe("Link Functions", function () {
+  describe("Transclude", function () {
     var compiledElement;
     beforeEach(function () {
       var scope=$rootScope.$new();
-      scope.text="new scope";
-      scope.fn=function() {console.log(test);};
-      compiledElement=compileFn('<link-fn data-my-attr="attr"></link-fn>',scope);
+      compiledElement=compileFn('<transclude-dir>My content</transclude-dir>',scope);
     });
-    it("should be able set scope", function () {
-      expect(compiledElement.html()).toContain('<div class="ng-binding">In Link</div>');
+    it("should wrap content", function () {
+      expect(compiledElement.html()).toEqual('<h1>Wrapped up</h1><ng-transclude><span class="ng-scope">My content</span></ng-transclude>');
     });
-    it("should be able change element DOM", function () {
-      expect(compiledElement.html()).toContain('<span>Added DOM</span>');
-    });
-    it("should be able access and change attributes", function () {
-      compiledElement.html();
-      expect(compiledElement.html()).toContain('<span>Added DOM</span>');
-    });
-  });
-  describe("Transclude", function () {
-
   });
   describe("Controller Functions", function () {
     var compiledElement, isolatedScope, isoCtrl;
@@ -141,16 +139,6 @@ describe('Directives', function() {
       template:'template text {{text}}'
     };
   })
-  .directive('isoScope',function(){
-    return {
-      scope:{
-        bindBoth:'=',
-        bindOne:'@',
-        bindMethod:'&'
-      },
-      template:'{{bindBoth.prop}} {{bindOne}} text<div ng-click="bindMethod()">Click Me</div>'
-    };
-  })
   .directive('linkFn',function(){
     var link=function(scope, element, attrs){
       scope.value="In Link";
@@ -161,6 +149,23 @@ describe('Directives', function() {
         template:'<div>{{value}}</div>',
         link:link
     };
+  })
+  .directive('isoScope',function(){
+    return {
+      scope:{
+        bindBoth:'=',
+        bindOne:'@',
+        bindMethod:'&'
+      },
+      template:'{{bindBoth.prop}} {{bindOne}} text<div ng-click="bindMethod()">Click Me</div>'
+    };
+  })
+  .directive('transcludeDir',function(){
+      return {
+        transclude:true,
+        template:['<h1>Wrapped up</h1>',
+                  '<ng-transclude></ng-transclude>'].join('')
+      };
   })
   .directive('parent',function(){
     function Controller(){
