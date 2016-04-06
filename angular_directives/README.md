@@ -1,7 +1,8 @@
 # Directives
 * Setup
   - Npm and install package.json
-* Need for components
+  * Modular Web Design
+[http://www.amazon.com/Modular-Web-Design-Components-Documentation/dp/0321601351]()
 * Matching
   - declaration myDirective matches element my-directive
 * Template Expansion
