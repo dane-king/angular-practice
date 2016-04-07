@@ -1,8 +1,9 @@
 # Directives
-* Modular Web Design
 * Setup
-  - Npm and install package.json
-  - Jasmine and Karma
+  - install npm   
+  - navigate to directive folder and run npm and install
+  - npm test to verify everything is set up correctly
+  - if working should see tests run but all skipped
 * Matching
   - declaration myDirective matches element my-directive
 * Directive Definition Object
