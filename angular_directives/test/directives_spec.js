@@ -43,9 +43,9 @@ describe('Directives', function() {
       expect(compiledElement.html()).toContain('<span>Added DOM</span>');
     });
 
-    xit("should be able access and change attributes", function () {
+    xit("should be able access attributes", function () {
       compiledElement.html();
-      expect(compiledElement.html()).toContain('<span>Added DOM</span>');
+      expect(compiledElement.html()).toContain('<div>Added attr</div>');
     });
   });
 
