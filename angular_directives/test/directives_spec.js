@@ -20,6 +20,7 @@ describe('Directives', function() {
       scope.text="expanded";
       compiledElement=compileFn('<tmpl>This is overwritten</templ>',scope);
     });
+
     xit("should expand template", function () {
       expect(compiledElement.html()).toEqual('template text expanded');
     });
@@ -33,12 +34,15 @@ describe('Directives', function() {
       scope.fn=function() {console.log(test);};
       compiledElement=compileFn('<link-fn data-my-attr="attr"></link-fn>',scope);
     });
+
     xit("should be able set scope", function () {
       expect(compiledElement.html()).toContain('<div class="ng-binding">Set Value In Link</div>');
     });
+
     xit("should be able change element DOM", function () {
       expect(compiledElement.html()).toContain('<span>Added DOM</span>');
     });
+
     xit("should be able access and change attributes", function () {
       compiledElement.html();
       expect(compiledElement.html()).toContain('<span>Added DOM</span>');
@@ -62,7 +66,6 @@ describe('Directives', function() {
 
     });
 
-
     xit("should be able to bind parent scope to isolated scope", function () {
         expect(compiledElement.html()).toContain('value some text');
     });
@@ -80,13 +83,16 @@ describe('Directives', function() {
         compiledElement.isolateScope().bindOne.prop1="new value";
         expect(mockScope.config.prop1).toBe('some');
     });
+
     xit("should have a function in isolate scope", function () {
       expect(compiledElement.isolateScope().bindMethod).toBeDefined();
     });
+
     xit("should call method on parent scope", function () {
         compiledElement.isolateScope().bindMethod();
         expect(mockScope.fn).toHaveBeenCalled();
     });
+
     xit("should call method on parent scope after click", function () {
         var divToClick=compiledElement.find('div')[0];
         divToClick.click();
@@ -100,6 +106,7 @@ describe('Directives', function() {
       var scope=$rootScope.$new();
       compiledElement=compileFn('<transclude-dir>My content</transclude-dir>',scope);
     });
+
     xit("should wrap content", function () {
       expect(compiledElement.html()).toEqual('<h1>Wrapped up</h1><ng-transclude><span class="ng-scope">My content</span></ng-transclude>');
     });
@@ -116,6 +123,7 @@ describe('Directives', function() {
       isolatedScope=compiledElement.isolateScope();
       isoCtrl=isolatedScope.ctrl;
     });
+
     xit("should use controller values", function () {
       expect(compiledElement.html())
         .toBe(['<div class="myList">',
@@ -125,10 +133,12 @@ describe('Directives', function() {
                   '<child item="{id:2,name:\'Joe\',value:5}" class="ng-binding ng-scope ng-isolate-scope">Name: Joe</child>',
                   '</ng-transclude></div>'].join(""));
     });
+
     xit("changes to isolate should reflect in controller", function () {
       isoCtrl.addItem({id:2,name:'Two'});
       expect(isoCtrl.items).toContain({id:2,name:'Two'});
     });
+
     xit("calculates sum of items", function () {
       //current total is 8
       expect(isoCtrl.sum()).toBe(8);
@@ -143,7 +153,6 @@ describe('Directives', function() {
 
   .directive('tmpl',function(){
     return {
-        template:'template text {{}}'
     };
   })
 
