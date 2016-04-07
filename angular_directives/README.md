@@ -1,9 +1,14 @@
 # Directives
 * Setup
-  - install npm   
-  - navigate to directive folder and run npm and install
+  - if using git - checkout project and navigate to angular_directive file
+    - switch to 'start' branch
+  - if downloading zip, from the branch download page switch to 'start' branch
+  - install npm is it isn't already
+  - navigate to angular_directive folder within the project
+  - run npm install
   - npm test to verify everything is set up correctly
   - if working should see tests run but all skipped
+  - remove 'x' from test to get a failing test, finish the directive code to make the test pass
 * Matching
   - declaration myDirective matches element my-directive
 * Directive Definition Object
