@@ -38,9 +38,9 @@ describe('Directives', function() {
     it("should be able change element DOM", function () {
       expect(compiledElement.html()).toContain('<span>Added DOM</span>');
     });
-    it("should be able access and change attributes", function () {
+    it("should be able access attributes", function () {
       compiledElement.html();
-      expect(compiledElement.html()).toContain('<span>Added DOM</span>');
+      expect(compiledElement.html()).toContain('<div>Added attr</div>');
     });
   });
   describe("Isolated Scope", function () {
@@ -146,6 +146,7 @@ describe('Directives', function() {
     var link=function(scope, element, attrs){
       scope.value="Set Value In Link";
       element.append('<span>Added DOM</span>');
+      element.append('<div>Added ' + attrs.myAttr +'</div>')
     };
     return{
         scope:{},
