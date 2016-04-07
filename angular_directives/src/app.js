@@ -63,5 +63,39 @@
                   '</div>'].join(''),
         link:link
     };
+  })
+  .controller('myController', function($scope) {
+      $scope.ids = [{
+        id: '1',
+        value: 'option1'
+      }, {
+        id: '2',
+        value: 'option2'
+      }, {
+        id: '3',
+        value: 'option3'
+      }];
+      $scope.selected = $scope.ids[0];
+    })
+    .directive('itemSelect', function() {
+      return {
+        restrict: 'E',
+        scope: {
+          items: '=',
+          ngModel: '='
+        },
+        template: '<select ng-options="item as item.value for item in items track by item.id" ng-model="ngModel"></select>'
+      };
+    })
+
+  .directive('itemSelect2',function(){
+    return{
+      restrict:'E',
+      require:'ngModel',
+      link:function(scope,element,attrs,ngModelCtrl){
+        console.log('in directive');
+        console.log(ngModelCtrl.$modelValue);
+      }
+    };
   });
 }());
