@@ -1,9 +1,11 @@
 # Directives
+* Modular Web Design
 * Setup
   - Npm and install package.json
-  * Modular Web Design
+  - Jasmine and Karma
 * Matching
   - declaration myDirective matches element my-directive
+* Directive Definition Object
 * Template Expansion
 * Isolate Scope
   - one way bind

@@ -33,7 +33,7 @@ describe('Directives', function() {
       compiledElement=compileFn('<link-fn data-my-attr="attr"></link-fn>',scope);
     });
     it("should be able set scope", function () {
-      expect(compiledElement.html()).toContain('<div class="ng-binding">In Link</div>');
+      expect(compiledElement.html()).toContain('<div class="ng-binding">Set Value In Link</div>');
     });
     it("should be able change element DOM", function () {
       expect(compiledElement.html()).toContain('<span>Added DOM</span>');
@@ -105,7 +105,10 @@ describe('Directives', function() {
     var compiledElement, isolatedScope, isoCtrl;
     beforeEach(function () {
       var scope=$rootScope.$new();
-      compiledElement=compileFn('<parent heading="expectedHeading"><child item="{id:1,name:\'Bob\',value:3}"></child><child item="{id:2,name:\'Joe\',value:5}"></child></parent>',scope);
+      compiledElement=compileFn(['<parent heading="expectedHeading">',
+                                  '<child item="{id:1,name:\'Bob\',value:3}"></child>',
+                                  '<child item="{id:2,name:\'Joe\',value:5}"></child>',
+                                  '</parent>'].join(''),scope);
       isolatedScope=compiledElement.isolateScope();
       isoCtrl=isolatedScope.ctrl;
     });
@@ -141,7 +144,7 @@ describe('Directives', function() {
   })
   .directive('linkFn',function(){
     var link=function(scope, element, attrs){
-      scope.value="In Link";
+      scope.value="Set Value In Link";
       element.append('<span>Added DOM</span>');
     };
     return{
