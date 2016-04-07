@@ -6,24 +6,28 @@
   <link rel="stylesheet" href="/css/style.css" media="screen" title="no title" charset="utf-8">
 </head>
 <body ng-app="app">
-    <stars-container>
-      <stars score="{value:0}"><h3>How would you rate Angular?</h3></stars>
-      <stars score="{value:0}"><h3>How would you rate Iron Man 2?</h3></stars>
-      <stars score="{value:0}"><h3>How wourld you rate this talk?</h3></stars>
-    </stars-container>
-    <div class="container">
-       <div ng-controller="myController">
-         Select 1 <item-select items="ids" ng-model="selected" ></item-select>
+  <div class="container">
+     <div ng-controller="myController">
+       Select 1 <item-select items="ids" ng-model="selected" ></item-select>
 
-        Select 2 <item-select items="ids" ng-model="selected" ></item-select>
+      Select 2 <item-select items="ids" ng-model="selected" ></item-select>
 
-         Controller Value
-         {{selected.id}}
+       Controller Value
+       {{selected.id}}
 
-         <item-select2 ng-model="selected"></item-select2>
-      </div>
-
+       <item-select2 ng-model="selected"></item-select2>
     </div>
+
+  </div>
+
+
+
+  <stars-container>
+    <stars score="{value:0}"><h3>How would you rate Angular?</h3></stars>
+    <stars score="{value:0}"><h3>How would you rate Iron Man 2?</h3></stars>
+    <stars score="{value:0}"><h3>How wourld you rate this talk?</h3></stars>
+  </stars-container>
+
 
 
   <script src="node_modules\angular\angular.js" charset="utf-8"></script>
