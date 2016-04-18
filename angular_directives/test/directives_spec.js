@@ -157,28 +157,64 @@ describe('Directives', function() {
   })
 
   .directive('linkFn',function(){
+    var link=function(scope, element, attrs){
+      //add values to scope
+      //add to element
+      //pass in valid attributes
+    };
     return{
+        scope:{},
+        template:'<div>{{value}}</div>',
+        link:link
     };
   })
 
   .directive('isoScope',function(){
     return {
+      //build isolated scope to populate following template
+      //template:'{{bindBoth.prop}} {{bindOne}} text<div ng-click="bindMethod()">Click Me</div>'
     };
   })
 
   .directive('transcludeDir',function(){
       return {
+        //add proper transclude tag to get proper output
+        template:['<h1>Wrapped up</h1>'].join('')
       };
   })
 
   .directive('parent',function(){
+    function Controller(){
+        //controller to add items to list and sum
+        //implement the items here
+        this.items=[];
+        this.addItem=function(item){};
+        this.sum=function(){return 0;};
+    }
     return {
+        scope:{
+          heading:'@'
+        },
+        template:['<div class="myList">',
+                  '<h1>{{heading}}</h1>',
+                  '<div>Sum is {{ctrl.sum()}}</div>',
+                  '</div>'].join('')
     };
   })
-
   .directive('child',function(){
+    function link(scope,element,attrs,parentCtrl){
+        //use parentCtrl add item to add child item
+    }
     return {
+      scope:{
+        item:'='
+      },
+      //need to require to get parentCtrl as a parameter to the link function
+      require:"^parent",
+      link:link,
+      template:'Name: {{item.name}}'
     };
   });
+
 
 }());
